@@ -11,7 +11,8 @@ begin
 	end if;
 end $$;
 
---Task 2: user_age isminde integer data türünde bir değişken tanımlayıp default olarak bir değer verelim, If yapısı ile girilen değer 18 den büyük ise Access Granted, küçük ise Access Denied yazdıralım
+--Task 2: user_age isminde integer data türünde bir değişken tanımlayıp default olarak bir değer verelim, If yapısı ile girilen değer 18 den büyük ise Access Granted,
+--küçük ise Access Denied yazdıralım
 do $$
 declare
 	user_age integer :=18;
@@ -24,11 +25,11 @@ begin
 end $$;
 
 --Task 3: a ve b isimli integer türünde 2 değişken tanımlayıp default değerlerini verelim, eğer a nın değeri b den büyükse "a, b den büyüktür" yazalım, 
---tam tersi durum için "b, a dan büyüktür" yazalım, iki değer birbirine eşit ise " a, b'ye eşittir" yazalım:
+--tam tersi durum için "b, a dan büyüktür" yazalım, iki değer birbirine eşit ise "a, b'ye eşittir" yazalım:
 do $$
 declare
 	a integer := 0;
-	b integer := 0;
+	b numeric := 0;
 begin
 	if(a>b) then
 		raise notice 'a, b den büyüktür';
@@ -42,7 +43,7 @@ end $$;
 --Task 4: kullaniciYasi isimli bir değişken oluşturup default değerini verin, girilen yaş 18 den büyükse "Oy kullanabilirsiniz", 18 den küçük ise "Oy kullanamazsınız" yazısını yazalım.
 do $$
 declare
-	user_age integer := 18;
+	user_age integer :=18;
 begin
 	if(user_age>=18) then
 		raise notice 'You can vote';
@@ -53,28 +54,23 @@ end $$;
 
 --LOOP
 --syntax
-/*
-	LOOP
-		statement;
-		IF condition then
-			exit; --loop tan cıkmayı saglar
-		END IF;
-	END LOOP;
---loop u sonlandırmak icin loop un icinde if yapisi kullanabiliriz	
-*/
+LOOP
+	statement;
+	IF condition then
+		exit; --loop tan cıkmayı saglar(loop u sonlandırmak icin loop un icinde if yapisi kullanabiliriz	)
+	END IF;
+END LOOP;
 
---nested loop
-/*
-	<<outer>>
+--NESTED LOOP
+<<outer>>
+LOOP
+	statement;
+	<<inner>>
 	LOOP
-		statement;
-		<<inner>>
-		LOOP
-			.....
-			exit <<inner>>
-		END LOOP;
-	END LOOP;	
-*/
+		.....
+		exit <<inner>>
+	END LOOP;
+END LOOP;	
 
 --Task: Fibonacci serisinde, belli bir sıradaki sayıyı ekrana getirelim
 do $$
@@ -99,13 +95,11 @@ end $$;
 
 --WHILE LOOP
 --syntax;
-/*
-	WHILE condition LOOP
-		statements;
-	END LOOP;
-*/
+WHILE condition LOOP
+	statement;
+END LOOP;
 
---Task: 1 dan 4 e kadar counter değerlerini ekrana basalım
+--Task: 1 den 4 e kadar counter değerlerini ekrana basalım
 do $$
 declare
 	counter integer :=0;
@@ -126,45 +120,30 @@ begin
 		raise notice '%', counter;
 	end loop;	
 end $$;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--3. yol:
+do $$
+declare
+	counter numeric :=0;
+begin
+	loop
+		exit when counter=4;
+		counter=counter+1;
+		raise notice '%', counter;
+	end loop;	
+end $$;
+--4. yol:
+do $$
+declare
+	counter numeric :=0;
+begin
+	loop
+		if counter=4 then
+			exit;
+		end if;	
+		counter=counter+1;
+		raise notice '%', counter;
+	end loop;	
+end $$;
 
 
 

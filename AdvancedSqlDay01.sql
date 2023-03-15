@@ -70,7 +70,7 @@ begin
 	raise notice 'Film name whose id is 1 %', film_name;
 end $$;
 
---IC ICE BLOK YAPILARI ------------------------------------------------------------------------------------------
+--IC ICE BLOK YAPILARI
 do $$
 <<outer_block>>
 declare
@@ -80,7 +80,7 @@ begin
 	raise notice 'The current value of counter is %', counter;
 		<<inner_block>> --optional
 		declare
-			counter integer :=0;
+			counter integer :=0; --dis block taki counter i gormedigi icin burda ayni isimle bir variable tanimlayabiliyorum
 		begin
 			counter := counter+10;
 			raise notice 'Counter in the sub block is %', counter;
@@ -92,7 +92,7 @@ end outer_block $$;	--end $$;
 --ROW TYPE
 do $$
 declare
-	selected_actor actor%rowtype;
+	selected_actor actor%rowtype; --record, row or object
 begin
 	select * from actor
 	into selected_actor --id, isim, soyisim
@@ -104,16 +104,12 @@ end $$;
 --Row type gibi calisir ama record in tamami degil de belli basliklari almak istersek kullanilabilir. Performansi arttirir, memory kullanımı acısından faydalıdır.
 do $$
 declare
-	rec record;
+	object record;
 begin
-	select id, title, type 
-	into rec
-	from film
-	where id=1;
-	raise notice '% % %', rec.id, rec.title, rec.type;
+	select id, title, type into object from film where id=1;
+	raise notice '% % %', object.id, object.title, object.type;
 end $$;	
 
-	
 
 
 
